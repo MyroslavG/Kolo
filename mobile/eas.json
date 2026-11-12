@@ -13,7 +13,12 @@
     },
     "production": {
       "autoIncrement": true,
-      "environment": "production"
+      "environment": "production",
+      "ios": {
+        "env": {
+          "SHARP_IGNORE_GLOBAL_LIBVIPS": "1"
+        }
+      }
     }
   },
   "submit": {
