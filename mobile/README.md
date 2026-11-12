@@ -13,6 +13,11 @@ pnpm mobile:dev
 
 Then open it in Expo Go, iOS Simulator, Android Emulator, or the web preview.
 
+This project uses **Expo SDK 58**. The Expo Go installed on your phone must
+support SDK 58. For a physical phone, connect it to the same Wi-Fi as your Mac
+and run `npx expo start --lan` from `mobile/`, then scan the displayed QR code.
+`--localhost` is only reachable on the computer running the server.
+
 ## Current Flow
 
 - Search by keyword, category, and location

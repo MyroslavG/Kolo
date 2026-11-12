@@ -23,6 +23,7 @@ import {
 } from "@/app/feed/actions";
 import { BusinessLogo } from "@/components/business-logo";
 import { FeedPostBody } from "@/components/feed-post-body";
+import { RoboBroCampaignCard } from "@/components/robobro-campaign-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -50,8 +51,8 @@ const text = {
     publish: "Опублікувати",
     signInTitle: "Увійдіть, щоб писати, лайкати й коментувати",
     signIn: "Увійти",
-    emptyTitle: "У стрічці ще тихо",
-    emptyText: "Перші оновлення з'являться тут.",
+    emptyTitle: "Поки немає дописів спільноти",
+    emptyText: "Оновлення від користувачів і бізнесів з'являться тут.",
     like: "Лайк",
     liked: "Вподобано",
     comments: "Коментарі",
@@ -77,8 +78,8 @@ const text = {
     publish: "Publish",
     signInTitle: "Sign in to post, like, and comment",
     signIn: "Sign in",
-    emptyTitle: "The feed is quiet for now",
-    emptyText: "The first updates will appear here.",
+    emptyTitle: "No community posts yet",
+    emptyText: "Updates from users and businesses will appear here.",
     like: "Like",
     liked: "Liked",
     comments: "Comments",
@@ -120,6 +121,10 @@ export default async function FeedPage({ searchParams }: FeedPageProps) {
           {labels.title}
         </h1>
         <p className="mt-3 text-muted-foreground">{labels.intro}</p>
+      </div>
+
+      <div className="mb-5">
+        <RoboBroCampaignCard locale={locale} placement="feed" />
       </div>
 
       {resolvedSearchParams.error ? (

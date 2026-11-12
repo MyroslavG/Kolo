@@ -17,6 +17,7 @@ import {
 import { BusinessLogo } from "@/components/business-logo";
 import { CategoryGrid } from "@/components/category-grid";
 import { OfficialKoloEventCard } from "@/components/official-kolo-event-card";
+import { RoboBroCampaignCard } from "@/components/robobro-campaign-card";
 import { SearchLauncher } from "@/components/search-launcher";
 import { Badge } from "@/components/ui/badge";
 import { categories, cities } from "@/lib/data";
@@ -111,6 +112,10 @@ export default async function HomePage() {
             locale={locale}
           />
         </div>
+      </section>
+
+      <section className="container pt-8 md:pt-10">
+        <RoboBroCampaignCard locale={locale} placement="home" />
       </section>
 
       {hasOfficialEvent ? (

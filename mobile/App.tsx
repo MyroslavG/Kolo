@@ -34,6 +34,7 @@ import {
   Pressable,
   RefreshControl,
   ScrollView,
+  type ScrollViewInstance,
   Share as NativeShare,
   StatusBar,
   type StyleProp,
@@ -41,6 +42,7 @@ import {
   Switch,
   Text,
   TextInput,
+  type TextInputInstance,
   View,
   type KeyboardEvent,
   type ViewStyle,
@@ -109,6 +111,7 @@ import {
   citySuggestions,
 } from "./src/data";
 import { rankBusinesses } from "./src/ranking";
+import { RoboBroCampaignCard } from "./src/components/robobro-campaign-card";
 import {
   completeAuthFromUrl,
   signInWithApple,
@@ -435,7 +438,7 @@ const copy = {
     eventsNearYou: "Події поруч",
     eventsIntro: "Дивіться події від українських бізнесів за містом або локацією поруч.",
     feed: "Стрічка",
-    feedEmpty: "У стрічці ще тихо.",
+    feedEmpty: "Поки немає дописів спільноти.",
     feedIntro: "Оновлення від користувачів і бізнесів Kolo.",
     feedPostAs: "Опублікувати як",
     feedPostAsBusiness: "Як бізнес",
@@ -767,7 +770,7 @@ const copy = {
     eventsNearYou: "Events near you",
     eventsIntro: "Browse events from Ukrainian businesses by city or nearby location.",
     feed: "Feed",
-    feedEmpty: "The feed is quiet for now.",
+    feedEmpty: "No community posts yet.",
     feedIntro: "Updates from Kolo users and businesses.",
     feedPostAs: "Post as",
     feedPostAsBusiness: "As business",
@@ -4302,11 +4305,7 @@ function KoloApp() {
 
   return (
     <View style={[styles.safeArea, isDarkMode ? styles.darkSafeArea : null]}>
-      <StatusBar
-        backgroundColor="transparent"
-        barStyle={isDarkMode ? "light-content" : "dark-content"}
-        translucent
-      />
+      <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
       <View style={styles.appShell}>
         {shouldShowPushBanner ? (
           <NotificationOptInBanner
@@ -4458,6 +4457,7 @@ function KoloApp() {
 
           {activeTab === "feed" ? (
             <FeedScreen
+              locale={locale}
               commentDrafts={feedCommentDrafts}
               draft={feedDraft}
               unreadMessageCount={unreadMessageCount}
@@ -4998,7 +4998,7 @@ function SearchScreen({
   const [discoveryShuffleSeed, setDiscoveryShuffleSeed] = useState(() =>
     Date.now(),
   );
-  const searchInputRef = useRef<TextInput>(null);
+  const searchInputRef = useRef<TextInputInstance>(null);
   const shouldFocusSearchInput = useRef(false);
   const hasActiveFilters = hasSearchFilters(
     query,
@@ -6796,7 +6796,7 @@ function HomeScreen({
   session: Session | null;
   weeklyTrendingBusinessScores: Map<string, number>;
 }) {
-  const scrollRef = useRef<ScrollView>(null);
+  const scrollRef = useRef<ScrollViewInstance>(null);
   const homeCopy = getHomeCopy(locale);
 
   useEffect(() => {
@@ -6932,6 +6932,8 @@ function HomeScreen({
       <Text style={[styles.homeBrand, isDarkMode ? styles.darkText : null]}>
         Kolo
       </Text>
+
+      <RoboBroCampaignCard isDarkMode={isDarkMode} locale={locale} placement="home" />
 
       {storyBusinesses.length ? (
         <ScrollView
@@ -7326,6 +7328,8 @@ function HomeLoadingScreen({
       <Text style={[styles.homeBrand, isDarkMode ? styles.darkText : null]}>
         Kolo
       </Text>
+
+      <RoboBroCampaignCard isDarkMode={isDarkMode} locale={locale} placement="home" />
 
       <View style={[styles.homeLoadingHero, isDarkMode ? styles.darkCard : null]}>
         <View style={styles.homeLoadingHeroTopRow}>
@@ -9666,6 +9670,7 @@ function getContentTypeLabel(
 }
 
 function FeedScreen({
+  locale,
   commentDrafts,
   draft,
   isDarkMode,
@@ -9693,6 +9698,7 @@ function FeedScreen({
   setDraft,
   unreadMessageCount,
 }: {
+  locale: Locale;
   commentDrafts: Record<string, string>;
   draft: string;
   isDarkMode: boolean;
@@ -9774,6 +9780,8 @@ function FeedScreen({
             ) : null}
           </Pressable>
         </View>
+
+        <RoboBroCampaignCard isDarkMode={isDarkMode} locale={locale} placement="feed" />
 
         {isLoading ? (
           <Text style={[styles.emptyState, isDarkMode ? styles.darkEmptyState : null]}>
